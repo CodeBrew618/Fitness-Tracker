@@ -36,98 +36,180 @@ const AddEditExercise = () => {
   return (
     <div
       style={{
-        maxWidth: 500,
-        margin: "2rem auto",
-        padding: 24,
-        background: "#fff",
-        borderRadius: 8,
-        boxShadow: "0 2px 8px #eee",
+        minHeight: "calc(100vh - 80px)",
+        background: "linear-gradient(120deg, #e3f2fd 0%, #f8fafc 100%)",
+        paddingTop: 60,
+        paddingBottom: 60,
       }}
     >
-      <h2 style={{ marginBottom: 24 }}>Add Exercise</h2>
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: 18 }}>
-          <label style={{ display: "block", marginBottom: 6 }}>Name</label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-            style={{
-              width: "100%",
-              padding: 8,
-              fontSize: 16,
-              borderRadius: 4,
-              border: "1px solid #ccc",
-            }}
-          />
-        </div>
-        <div style={{ marginBottom: 18 }}>
-          <label style={{ display: "block", marginBottom: 6 }}>Sets</label>
-          <input
-            type="number"
-            value={sets}
-            onChange={(e) => setSets(e.target.value)}
-            min="1"
-            style={{
-              width: "100%",
-              padding: 8,
-              fontSize: 16,
-              borderRadius: 4,
-              border: "1px solid #ccc",
-            }}
-          />
-        </div>
-        <div style={{ marginBottom: 18 }}>
-          <label style={{ display: "block", marginBottom: 6 }}>Reps</label>
-          <input
-            type="number"
-            value={reps}
-            onChange={(e) => setReps(e.target.value)}
-            min="1"
-            style={{
-              width: "100%",
-              padding: 8,
-              fontSize: 16,
-              borderRadius: 4,
-              border: "1px solid #ccc",
-            }}
-          />
-        </div>
-        <div style={{ marginBottom: 18 }}>
-          <label style={{ display: "block", marginBottom: 6 }}>Weight</label>
-          <input
-            type="number"
-            value={weight}
-            onChange={(e) => setWeight(e.target.value)}
-            min="0"
-            step="0.1"
-            style={{
-              width: "100%",
-              padding: 8,
-              fontSize: 16,
-              borderRadius: 4,
-              border: "1px solid #ccc",
-            }}
-          />
-        </div>
-        {error && <div style={{ color: "red", marginBottom: 12 }}>{error}</div>}
-        <button
-          type="submit"
-          disabled={loading}
+      <div
+        style={{
+          maxWidth: 500,
+          margin: "0 auto",
+          padding: "2.5rem 2rem 2rem 2rem",
+          background: "#fff",
+          borderRadius: 18,
+          boxShadow: "0 4px 24px #e0e0e0",
+        }}
+      >
+        <h2
           style={{
-            padding: "0.75rem 1.5rem",
-            fontSize: 16,
-            borderRadius: 6,
-            background: "#1976d2",
-            color: "#fff",
-            border: "none",
-            cursor: "pointer",
+            marginBottom: 28,
+            color: "#1976d2",
+            fontWeight: 800,
+            fontSize: 28,
+            textAlign: "center",
           }}
         >
-          {loading ? "Adding..." : "Add Exercise"}
-        </button>
-      </form>
+          Add Exercise
+        </h2>
+        <form onSubmit={handleSubmit}>
+          <div style={{ marginBottom: 24 }}>
+            <label
+              style={{
+                display: "block",
+                marginBottom: 8,
+                fontWeight: 600,
+                color: "#1976d2",
+                fontSize: 16,
+              }}
+            >
+              Name
+            </label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              style={{
+                width: "100%",
+                padding: 12,
+                fontSize: 17,
+                borderRadius: 8,
+                border: "1.5px solid #b3e5fc",
+                background: "#f8fafc",
+                outline: "none",
+                marginBottom: 2,
+              }}
+            />
+          </div>
+          <div style={{ marginBottom: 24 }}>
+            <label
+              style={{
+                display: "block",
+                marginBottom: 8,
+                fontWeight: 600,
+                color: "#1976d2",
+                fontSize: 16,
+              }}
+            >
+              Sets
+            </label>
+            <input
+              type="number"
+              value={sets}
+              onChange={(e) => setSets(e.target.value)}
+              min="1"
+              style={{
+                width: "100%",
+                padding: 12,
+                fontSize: 17,
+                borderRadius: 8,
+                border: "1.5px solid #b3e5fc",
+                background: "#f8fafc",
+                outline: "none",
+                marginBottom: 2,
+              }}
+            />
+          </div>
+          <div style={{ marginBottom: 24 }}>
+            <label
+              style={{
+                display: "block",
+                marginBottom: 8,
+                fontWeight: 600,
+                color: "#1976d2",
+                fontSize: 16,
+              }}
+            >
+              Reps
+            </label>
+            <input
+              type="number"
+              value={reps}
+              onChange={(e) => setReps(e.target.value)}
+              min="1"
+              style={{
+                width: "100%",
+                padding: 12,
+                fontSize: 17,
+                borderRadius: 8,
+                border: "1.5px solid #b3e5fc",
+                background: "#f8fafc",
+                outline: "none",
+                marginBottom: 2,
+              }}
+            />
+          </div>
+          <div style={{ marginBottom: 24 }}>
+            <label
+              style={{
+                display: "block",
+                marginBottom: 8,
+                fontWeight: 600,
+                color: "#1976d2",
+                fontSize: 16,
+              }}
+            >
+              Weight
+            </label>
+            <input
+              type="number"
+              value={weight}
+              onChange={(e) => setWeight(e.target.value)}
+              min="0"
+              step="0.1"
+              style={{
+                width: "100%",
+                padding: 12,
+                fontSize: 17,
+                borderRadius: 8,
+                border: "1.5px solid #b3e5fc",
+                background: "#f8fafc",
+                outline: "none",
+                marginBottom: 2,
+              }}
+            />
+          </div>
+          {error && (
+            <div
+              style={{ color: "#d32f2f", marginBottom: 16, fontWeight: 600 }}
+            >
+              {error}
+            </div>
+          )}
+          <button
+            type="submit"
+            disabled={loading}
+            style={{
+              padding: "0.75rem 1.5rem",
+              fontSize: 17,
+              borderRadius: 24,
+              background: "#1976d2",
+              color: "#fff",
+              border: "none",
+              fontWeight: 700,
+              boxShadow: "0 2px 8px #e3e3e3",
+              cursor: "pointer",
+              width: "100%",
+              marginTop: 8,
+              transition: "background 0.2s",
+            }}
+          >
+            {loading ? "Adding..." : "Add Exercise"}
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

@@ -4,51 +4,117 @@ const Dashboard = () => {
   return (
     <div
       style={{
-        maxWidth: 600,
-        margin: "3rem auto",
-        padding: "2rem",
-        background: "#fff",
-        borderRadius: 10,
-        boxShadow: "0 2px 12px #e0e0e0",
-        textAlign: "center",
+        minHeight: "calc(100vh - 80px)",
+        background: "linear-gradient(120deg, #e3f2fd 0%, #f8fafc 100%)",
+        paddingTop: 60,
+        paddingBottom: 60,
       }}
     >
-      <h1 style={{ marginBottom: 16, color: "#1976d2" }}>🏋️‍♂️ Workout Track</h1>
-      <p style={{ fontSize: 18, color: "#444", marginBottom: 32 }}>
-        Welcome to Workout Track! Easily log, view, and manage your workouts and
-        exercises.
-      </p>
-      <div style={{ display: "flex", justifyContent: "center", gap: 20 }}>
-        <a href="/workouts">
-          <button
+      <div
+        style={{
+          maxWidth: 600,
+          margin: "0 auto",
+          padding: "2.5rem 2rem 2rem 2rem",
+          background: "#fff",
+          borderRadius: 18,
+          boxShadow: "0 4px 24px #e0e0e0",
+          textAlign: "center",
+        }}
+      >
+        <div style={{ marginBottom: 18 }}>
+          <span style={{ fontSize: 54, display: "block", marginBottom: 8 }}>
+            🏋️‍♂️
+          </span>
+          <h1
             style={{
-              padding: "0.75rem 1.5rem",
-              fontSize: 16,
-              borderRadius: 6,
-              background: "#1976d2",
-              color: "#fff",
-              border: "none",
-              cursor: "pointer",
+              margin: 0,
+              color: "#1976d2",
+              fontWeight: 800,
+              fontSize: 36,
+              letterSpacing: 1,
             }}
           >
-            View Workouts
-          </button>
-        </a>
-        <a href="/add-workout">
-          <button
-            style={{
-              padding: "0.75rem 1.5rem",
-              fontSize: 16,
-              borderRadius: 6,
-              background: "#43a047",
-              color: "#fff",
-              border: "none",
-              cursor: "pointer",
-            }}
-          >
-            Add Workout
-          </button>
-        </a>
+            Welcome Back!
+          </h1>
+        </div>
+        <p
+          style={{
+            fontSize: 20,
+            color: "#444",
+            marginBottom: 32,
+            fontWeight: 500,
+          }}
+        >
+          Track your progress, stay motivated, and crush your fitness goals.
+        </p>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            gap: 32,
+            marginBottom: 32,
+          }}
+        >
+          <a href="/workouts" style={{ textDecoration: "none" }}>
+            <div
+              style={{
+                background: "#e3f2fd",
+                borderRadius: 12,
+                padding: "1.5rem 2.2rem",
+                boxShadow: "0 2px 8px #e0e0e0",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                transition: "box-shadow 0.2s, transform 0.2s",
+                cursor: "pointer",
+              }}
+              onMouseOver={(e) =>
+                (e.currentTarget.style.boxShadow = "0 4px 16px #b3e5fc")
+              }
+              onMouseOut={(e) =>
+                (e.currentTarget.style.boxShadow = "0 2px 8px #e0e0e0")
+              }
+            >
+              <span style={{ fontSize: 32, marginBottom: 8, color: "#1976d2" }}>
+                📋
+              </span>
+              <span style={{ fontWeight: 700, color: "#1976d2", fontSize: 18 }}>
+                View Workouts
+              </span>
+            </div>
+          </a>
+          <a href="/add-workout" style={{ textDecoration: "none" }}>
+            <div
+              style={{
+                background: "#e8f5e9",
+                borderRadius: 12,
+                padding: "1.5rem 2.2rem",
+                boxShadow: "0 2px 8px #e0e0e0",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                transition: "box-shadow 0.2s, transform 0.2s",
+                cursor: "pointer",
+              }}
+              onMouseOver={(e) =>
+                (e.currentTarget.style.boxShadow = "0 4px 16px #a5d6a7")
+              }
+              onMouseOut={(e) =>
+                (e.currentTarget.style.boxShadow = "0 2px 8px #e0e0e0")
+              }
+            >
+              <span style={{ fontSize: 32, marginBottom: 8, color: "#43a047" }}>
+                ➕
+              </span>
+              <span style={{ fontWeight: 700, color: "#43a047", fontSize: 18 }}>
+                Add Workout
+              </span>
+            </div>
+          </a>
+        </div>
+        <div style={{ color: "#888", fontSize: 15, marginTop: 18 }}>
+          <em>"The only bad workout is the one you didn't do."</em>
+        </div>
       </div>
     </div>
   );

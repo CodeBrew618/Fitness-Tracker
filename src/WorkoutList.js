@@ -53,98 +53,136 @@ const WorkoutList = () => {
   return (
     <div
       style={{
-        maxWidth: 600,
-        margin: "2rem auto",
-        padding: "1rem",
-        background: "#fff",
-        borderRadius: 8,
-        boxShadow: "0 2px 8px #eee",
+        minHeight: "calc(100vh - 80px)",
+        background: "linear-gradient(120deg, #e3f2fd 0%, #f8fafc 100%)",
+        paddingTop: 60,
+        paddingBottom: 60,
       }}
     >
       <div
         style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: 24,
+          maxWidth: 650,
+          margin: "0 auto",
+          padding: "2.5rem 2rem 2rem 2rem",
+          background: "#fff",
+          borderRadius: 18,
+          boxShadow: "0 4px 24px #e0e0e0",
         }}
       >
-        <h2 style={{ margin: 0 }}>Workouts</h2>
-        <Link to="/add-workout">
-          <button
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: 32,
+          }}
+        >
+          <h2
             style={{
-              padding: "0.5rem 1rem",
-              fontSize: 16,
-              borderRadius: 4,
-              background: "#1976d2",
-              color: "#fff",
-              border: "none",
+              margin: 0,
+              color: "#1976d2",
+              fontWeight: 800,
+              fontSize: 28,
             }}
           >
-            + Add Workout
-          </button>
-        </Link>
-      </div>
-      {loading ? (
-        <div style={{ textAlign: "center", color: "#888", marginTop: 40 }}>
-          Loading...
-        </div>
-      ) : error ? (
-        <div style={{ color: "red", textAlign: "center", marginTop: 40 }}>
-          {error}
-        </div>
-      ) : workouts.length === 0 ? (
-        <div style={{ textAlign: "center", color: "#888", marginTop: 40 }}>
-          No workouts yet.
-        </div>
-      ) : (
-        <ul style={{ listStyle: "none", padding: 0 }}>
-          {workouts.map((workout) => (
-            <li
-              key={workout.id}
+            Your Workouts
+          </h2>
+          <Link to="/add-workout">
+            <button
               style={{
-                marginBottom: 18,
-                padding: 16,
-                border: "1px solid #eee",
-                borderRadius: 6,
-                background: "#fafafa",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
+                padding: "0.5rem 1.2rem",
+                fontSize: 16,
+                borderRadius: 24,
+                background: "#1976d2",
+                color: "#fff",
+                border: "none",
+                fontWeight: 600,
+                boxShadow: "0 2px 8px #e3e3e3",
+                transition: "background 0.2s",
               }}
             >
-              <div>
-                <Link
-                  to={`/workouts/${workout.id}`}
+              + Add Workout
+            </button>
+          </Link>
+        </div>
+        {loading ? (
+          <div style={{ textAlign: "center", color: "#888", marginTop: 40 }}>
+            Loading...
+          </div>
+        ) : error ? (
+          <div style={{ color: "red", textAlign: "center", marginTop: 40 }}>
+            {error}
+          </div>
+        ) : workouts.length === 0 ? (
+          <div style={{ textAlign: "center", color: "#888", marginTop: 40 }}>
+            <div style={{ fontSize: 48, marginBottom: 12 }}>🗓️</div>
+            <div style={{ fontSize: 20, fontWeight: 500, marginBottom: 8 }}>
+              No workouts yet.
+            </div>
+            <div style={{ fontSize: 16, color: "#aaa" }}>
+              Start by adding your first workout!
+            </div>
+          </div>
+        ) : (
+          <ul style={{ listStyle: "none", padding: 0 }}>
+            {workouts.map((workout) => (
+              <li
+                key={workout.id}
+                style={{
+                  marginBottom: 20,
+                  borderRadius: 14,
+                  boxShadow: "0 2px 12px #e3e3e3",
+                  background: "#f8fafc",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  padding: "1.2rem 1.5rem",
+                  transition: "box-shadow 0.2s, transform 0.2s",
+                }}
+                onMouseOver={(e) =>
+                  (e.currentTarget.style.boxShadow = "0 4px 24px #b3e5fc")
+                }
+                onMouseOut={(e) =>
+                  (e.currentTarget.style.boxShadow = "0 2px 12px #e3e3e3")
+                }
+              >
+                <div>
+                  <Link
+                    to={`/workouts/${workout.id}`}
+                    style={{
+                      textDecoration: "none",
+                      color: "#1976d2",
+                      fontWeight: 700,
+                      fontSize: 18,
+                    }}
+                  >
+                    <span style={{ fontSize: 22, marginRight: 10 }}>📅</span>
+                    {workout.date} {workout.notes ? `- ${workout.notes}` : ""}
+                  </Link>
+                </div>
+                <button
+                  onClick={() => handleDeleteWorkout(workout.id)}
+                  disabled={deletingId === workout.id}
                   style={{
-                    textDecoration: "none",
-                    color: "#1976d2",
-                    fontWeight: 500,
+                    background: "#d32f2f",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: 24,
+                    padding: "0.3rem 1.1rem",
+                    fontSize: 15,
+                    cursor: "pointer",
+                    marginLeft: 12,
+                    fontWeight: 600,
+                    boxShadow: "0 2px 8px #f8bbd0",
                   }}
                 >
-                  {workout.date} {workout.notes ? `- ${workout.notes}` : ""}
-                </Link>
-              </div>
-              <button
-                onClick={() => handleDeleteWorkout(workout.id)}
-                disabled={deletingId === workout.id}
-                style={{
-                  background: "#d32f2f",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: 4,
-                  padding: "0.3rem 0.7rem",
-                  fontSize: 14,
-                  cursor: "pointer",
-                  marginLeft: 12,
-                }}
-              >
-                {deletingId === workout.id ? "Deleting..." : "Delete"}
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
+                  {deletingId === workout.id ? "Deleting..." : "Delete"}
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 };
