@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "./supabaseClient";
+
+import UserContext from "./UserContext";
 
 const WorkoutDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const user = useContext(UserContext);
   const [workout, setWorkout] = useState(null);
   const [exercises, setExercises] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -62,28 +65,39 @@ const WorkoutDetails = () => {
     const fetchDetails = async () => {
       setLoading(true);
       setError(null);
-      // Fetch workout
+      if (!user) {
+        setError("User not found. Please log in again.");
+        setLoading(false);
+        return;
+      }
+      // Fetch workout and check user_id
       const { data: workoutData, error: workoutError } = await supabase
         .from("workouts")
-        .select("id, date, notes")
+        .select("id, user_id, date, notes")
         .eq("id", id)
         .single();
+      if (workoutError || !workoutData) {
+        setError("Failed to load workout.");
+        setLoading(false);
+        return;
+      }
+      if (workoutData.user_id !== user.id) {
+        setError("You do not have access to this workout.");
+        setLoading(false);
+        return;
+      }
       // Fetch exercises for this workout (use workout_id foreign key)
       const { data: exercisesData, error: exercisesError } = await supabase
         .from("exercises")
         .select("id, name, sets, reps, weight")
         .eq("workout_id", id)
         .order("id");
-      if (workoutError) {
-        setError("Failed to load workout.");
-      } else {
-        setWorkout(workoutData);
-        setExercises(exercisesData || []);
-      }
+      setWorkout(workoutData);
+      setExercises(exercisesData || []);
       setLoading(false);
     };
     fetchDetails();
-  }, [id]);
+  }, [id, user]);
 
   // Delete workout handler
   const handleDeleteWorkout = async () => {

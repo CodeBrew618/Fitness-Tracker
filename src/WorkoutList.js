@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "./supabaseClient";
+
+import UserContext from "./UserContext";
 
 const WorkoutList = () => {
   const [workouts, setWorkouts] = useState([]);
@@ -32,13 +34,20 @@ const WorkoutList = () => {
     }
   };
 
+  const user = useContext(UserContext);
   useEffect(() => {
     const fetchWorkouts = async () => {
       setLoading(true);
       setError(null);
+      if (!user) {
+        setWorkouts([]);
+        setLoading(false);
+        return;
+      }
       const { data, error } = await supabase
         .from("workouts")
         .select("id, user_id, date, notes")
+        .eq("user_id", user.id)
         .order("date", { ascending: false });
       if (error) {
         setError("Failed to load workouts.");
@@ -48,7 +57,7 @@ const WorkoutList = () => {
       setLoading(false);
     };
     fetchWorkouts();
-  }, []);
+  }, [user]);
 
   return (
     <div

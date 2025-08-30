@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "./supabaseClient";
+
+import UserContext from "./UserContext";
 
 const AddEditWorkout = () => {
   const [date, setDate] = useState("");
@@ -8,13 +10,21 @@ const AddEditWorkout = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const user = useContext(UserContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    // Insert new workout (no user_id for now)
-    const { error } = await supabase.from("workouts").insert([{ date, notes }]);
+    // Insert new workout with user_id
+    if (!user) {
+      setError("User not found. Please log in again.");
+      setLoading(false);
+      return;
+    }
+    const { error } = await supabase
+      .from("workouts")
+      .insert([{ date, notes, user_id: user.id }]);
     setLoading(false);
     if (error) {
       setError("Failed to add workout.");
