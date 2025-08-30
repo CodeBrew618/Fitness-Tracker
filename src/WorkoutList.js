@@ -1,11 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "./supabaseClient";
 
 const WorkoutList = () => {
   const [workouts, setWorkouts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [deletingId, setDeletingId] = useState(null);
+  const navigate = useNavigate();
+  // Delete workout handler
+  const handleDeleteWorkout = async (workoutId) => {
+    if (
+      !window.confirm(
+        "Are you sure you want to delete this workout? This will also delete all its exercises."
+      )
+    )
+      return;
+    setDeletingId(workoutId);
+    // Delete exercises for this workout
+    await supabase.from("exercises").delete().eq("workout_id", workoutId);
+    // Delete the workout
+    const { error } = await supabase
+      .from("workouts")
+      .delete()
+      .eq("id", workoutId);
+    setDeletingId(null);
+    if (error) {
+      setError("Failed to delete workout.");
+    } else {
+      setWorkouts((prev) => prev.filter((w) => w.id !== workoutId));
+    }
+  };
 
   useEffect(() => {
     const fetchWorkouts = async () => {
@@ -83,18 +108,39 @@ const WorkoutList = () => {
                 border: "1px solid #eee",
                 borderRadius: 6,
                 background: "#fafafa",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
               }}
             >
-              <Link
-                to={`/workouts/${workout.id}`}
+              <div>
+                <Link
+                  to={`/workouts/${workout.id}`}
+                  style={{
+                    textDecoration: "none",
+                    color: "#1976d2",
+                    fontWeight: 500,
+                  }}
+                >
+                  {workout.date} {workout.notes ? `- ${workout.notes}` : ""}
+                </Link>
+              </div>
+              <button
+                onClick={() => handleDeleteWorkout(workout.id)}
+                disabled={deletingId === workout.id}
                 style={{
-                  textDecoration: "none",
-                  color: "#1976d2",
-                  fontWeight: 500,
+                  background: "#d32f2f",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: 4,
+                  padding: "0.3rem 0.7rem",
+                  fontSize: 14,
+                  cursor: "pointer",
+                  marginLeft: 12,
                 }}
               >
-                {workout.date} {workout.notes ? `- ${workout.notes}` : ""}
-              </Link>
+                {deletingId === workout.id ? "Deleting..." : "Delete"}
+              </button>
             </li>
           ))}
         </ul>
